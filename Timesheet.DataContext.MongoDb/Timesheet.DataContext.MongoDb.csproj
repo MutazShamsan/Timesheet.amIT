@@ -68,5 +68,11 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Timesheet.Models\Timesheet.Models.csproj">
+      <Project>{A8DB58D3-5B16-4E26-B105-C2CA3C629DD3}</Project>
+      <Name>Timesheet.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

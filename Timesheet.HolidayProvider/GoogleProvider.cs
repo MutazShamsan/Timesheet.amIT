@@ -6,6 +6,7 @@ using Google.Apis.Util.Store;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Timesheet.Models;
@@ -21,14 +22,20 @@ namespace Timesheet.HolidayProvider
 
         public override async Task<IEnumerable<HolidayModel>> GetHolidays(string country, string state, Stream file = null)
         {
-            using (var service = await InitializeApiService(file))
+            var result = new List<HolidayModel>();
+            try
             {
-                var request = SetupSearchCriteria(service);
-                var result = await request.ExecuteAsync();
-                FilterResult(result);
+                using (var service = await InitializeApiService(file))
+                {
+                    var request = SetupSearchCriteria(service);
+                    var tmpResult = request.Execute();
+                    result = FilterResult(tmpResult, state);
+                }
             }
+            catch (Exception ex)
+            { }
 
-            return new List<HolidayModel>();
+            return result;
         }
 
         private async Task<CalendarService> InitializeApiService(Stream file)
@@ -58,30 +65,30 @@ namespace Timesheet.HolidayProvider
             request.ShowDeleted = false;
             request.SingleEvents = true;
             request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-
             return request;
         }
 
-        private List<HolidayModel> FilterResult(Events events)
+        private List<HolidayModel> FilterResult(Events events, string state)
         {
             List<HolidayModel> result = new List<HolidayModel>();
+            DateTimeOffset holidayDate;
 
             if (events?.Items?.Count > 0)
             {
                 foreach (var eventItem in events.Items)
                 {
-                    if (eventItem.Summary.Contains("Valen"))
+                    holidayDate = DateTimeOffset.Parse(eventItem.Start.Date);
+                    if (eventItem.Summary.Contains("Valen") || eventItem.Summary.Contains("Easter Sunday") || holidayDate.DayOfWeek == DayOfWeek.Saturday)
                     { }
                     else
                     {
-                        result.Add(new HolidayModel() { Date = DateTimeOffset.Parse(eventItem.Start.Date), Name = eventItem.Summary } );
+                        if (string.IsNullOrEmpty(eventItem.Description) || eventItem.Description.Contains(state))
+                            result.Add(new HolidayModel() { Date = holidayDate, Name = eventItem.Summary });
                     }
                 }
             }
-            
 
             return result;
-
         }
     }
 }

@@ -96,6 +96,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="credentials.json" />
+    <None Include="App.config" />
+    <None Include="MY_amIT_Timesheet.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -118,6 +122,14 @@
     <ProjectReference Include="..\Timesheet.HolidayProvider\Timesheet.HolidayProvider.csproj">
       <Project>{2d8dd181-ad36-4ac9-9149-d33af775c477}</Project>
       <Name>Timesheet.HolidayProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timesheet.Interfaces\Timesheet.Interfaces.csproj">
+      <Project>{e85df0f5-b13e-4f9a-adcb-a1ffe6f66f0d}</Project>
+      <Name>Timesheet.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timesheet.Models\Timesheet.Models.csproj">
+      <Project>{a8db58d3-5b16-4e26-b105-c2ca3c629dd3}</Project>
+      <Name>Timesheet.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -21,7 +21,7 @@ namespace Timesheet.amIT
 
         public IEnumerable<string> Scopes { get; private set; }
 
-        public override async Task<IEnumerable<HolidayModel>> GetHolidays(string country, string state)
+        public override async Task<IEnumerable<HolidayModel>> GetHolidays(string country, string state, Stream file = null)
         {
             using (var service = await InitializeApiService())
             {

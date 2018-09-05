@@ -2,13 +2,18 @@
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using Timesheet.BusinessLogic;
 
 namespace Timesheet.amIT.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
         private string _title = "Prism Application";
-        private List<DateTime> weekends = new List<DateTime>();
+        private List<Models.HolidayModel> holidays = new List<Models.HolidayModel>();
         DateTime start, end;
         public string Title
         {
@@ -21,26 +26,14 @@ namespace Timesheet.amIT.ViewModels
             //GooCaleApi sss = new GooCaleApi();
             //sss.Test();
 
-            //start = new DateTime(2018, 9, 1);
-            //end = new DateTime(2018, 9, 30);
+            start = new DateTime(2018, 9, 1);
+            end = new DateTime(2018, 9, 30);
+
+            Interfaces.IHolidayProvider ss = new HolidayProvider.GoogleProvider();
+            ss.StartIn(new DateTime(2018, 1, 1)).EndIn(new DateTime(2018, 12, 31));
+            holidays = ss.GetHolidays("My", "Kuala", ResourceManagement.GetResourceFileStream("Timesheet.amIT.credentials.json")).Result.ToList();
 
             Populate();
-        }
-
-        private void AssignWeekendDays(DateTime start, DateTime end)
-        {
-            while (start <= end)
-            {
-                switch (start.DayOfWeek)
-                {
-                    case DayOfWeek.Saturday:
-                    case DayOfWeek.Sunday:
-                        weekends.Add(start);
-                        break;
-                }
-                start = start.AddDays(1);
-
-            }
         }
 
         private void PopulateDateToSheet(DateTime currentDay, int columnIndex, ExcelWorksheet workSheet)
@@ -65,7 +58,10 @@ namespace Timesheet.amIT.ViewModels
                     //cell.Value = "SU";
                     break;
                 default:
-                    ss = new DateTimeSheet(currentDay, typeof(int), 8);
+                    if (holidays.Any(st => st.Date.Date == currentDay.Date))
+                        ss = new DateTimeSheet(currentDay, typeof(string), "H");
+                    else
+                        ss = new DateTimeSheet(currentDay, typeof(int), 8);
                     break;
             }
 
@@ -75,7 +71,7 @@ namespace Timesheet.amIT.ViewModels
 
         private void Populate()
         {
-            using (var package = new ExcelPackage(new System.IO.FileInfo(@"C:\Users\mutazm-c\source\repos\Timesheet.amIT\Timesheet.amIT\bin\Debug\MY_amIT_Timesheet.xlsx")))
+            using (var package = new ExcelPackage(new System.IO.FileInfo(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "MY_amIT_Timesheet.xlsx"))))
             {
                 var worksheet = package.Workbook.Worksheets[1];
                 var columnIndex = 2;

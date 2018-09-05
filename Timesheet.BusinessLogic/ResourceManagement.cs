@@ -9,7 +9,7 @@ namespace Timesheet.BusinessLogic
         public static Stream GetResourceFileStream(string resourceFileName)
         {
             Stream result = null;
-            var assembly = Assembly.GetExecutingAssembly();
+            var assembly = Assembly.GetEntryAssembly();
 
             if (assembly.GetManifestResourceNames().Any(st => st == resourceFileName))
                 result = assembly.GetManifestResourceStream(resourceFileName);

@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace Timesheet.Models
 {
-    public class HolidayModel
+    public class CountryHolidayModel
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public TimeZoneInfo TimeZone { get; set; }
-        public DateTimeOffset Date { get; set; }
+        public string CountryCode { get; set; }
+        public string State { get; set; }
+        IEnumerable<HolidayModel> Holidays { get; set; }
+        public DateTime UpdatedDate { get; set; }
     }
 }
