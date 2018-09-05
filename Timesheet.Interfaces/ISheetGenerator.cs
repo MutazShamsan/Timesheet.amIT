@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Timesheet.Interfaces;
 
-namespace Timesheet.BusinessLogic
+namespace Timesheet.Interfaces
 {
     public interface ISheetGenerator
     {

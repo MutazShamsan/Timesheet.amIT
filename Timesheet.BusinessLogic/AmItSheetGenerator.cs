@@ -11,7 +11,7 @@ namespace Timesheet.BusinessLogic
 {
     public class AmItSheetGenerator : SheetGeneratorBase
     {
-        public AmItSheetGenerator(IHolidayProvider holidayApi, DateTime start, DateTime end) : base(holidayApi, start, end)
+        public AmItSheetGenerator(IHolidayProvider holidayApi = null, DateTime? start = null, DateTime? end = null) : base(holidayApi, start, end)
         { }
 
         public override void Start(string fileName)

@@ -15,10 +15,10 @@ namespace Timesheet.BusinessLogic
         protected DateTime StartPeriod { get; set; }
         protected DateTime EndPeriod { get; set; }
 
-        public SheetGeneratorBase(IHolidayProvider holidayApi, DateTime start, DateTime end)
+        public SheetGeneratorBase(IHolidayProvider holidayApi, DateTime? start, DateTime? end)
         {
-            StartPeriod = start;
-            EndPeriod = end;
+            StartPeriod = start.GetValueOrDefault();
+            EndPeriod = end.GetValueOrDefault();
             HolidayApi = holidayApi;
             HolidayApi.StartIn(StartPeriod).EndIn(EndPeriod);
         }
