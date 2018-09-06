@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace Timesheet.BusinessLogic
+namespace Timesheet.Common
 {
     public static class ResourceManagement
     {
@@ -16,5 +16,7 @@ namespace Timesheet.BusinessLogic
 
             return result;
         }
+
+        public static string GetCurrentExecution() => Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
     }
 }

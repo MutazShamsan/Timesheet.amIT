@@ -20,12 +20,12 @@ namespace Timesheet.HolidayProvider
         private readonly string _calenderId = "en.malaysia#holiday@group.v.calendar.google.com";
         private readonly string _credPath = "token.json";
 
-        public override async Task<IEnumerable<HolidayModel>> GetHolidays(string country, string state, Stream file = null)
+        public override async Task<IEnumerable<HolidayModel>> GetHolidays(string country, string state)
         {
             var result = new List<HolidayModel>();
             try
             {
-                using (var service = await InitializeApiService(file))
+                using (var service = await InitializeApiService())
                 {
                     var request = SetupSearchCriteria(service);
                     var tmpResult = request.Execute();
@@ -38,14 +38,14 @@ namespace Timesheet.HolidayProvider
             return result;
         }
 
-        private async Task<CalendarService> InitializeApiService(Stream file)
+        private async Task<CalendarService> InitializeApiService()
         {
             UserCredential credential;
 
-            using (file)
+            using (var stream = Common.ResourceManagement.GetResourceFileStream("Timesheet.amIT.credentials.json"))
             {
                 credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(file).Secrets, _scopes, "user",
+                    GoogleClientSecrets.Load(stream).Secrets, _scopes, "user",
                     CancellationToken.None, new FileDataStore(_credPath, true));
             }
 

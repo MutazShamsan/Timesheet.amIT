@@ -9,6 +9,6 @@ namespace Timesheet.Interfaces
 {
     public interface ISheetGenerator
     {
-        void Start(string fileName);
+        Task Start(string fileName);
     }
 }

@@ -25,9 +25,9 @@ namespace Timesheet.BusinessLogic
 
         protected async Task GetHolidays()
         {
-            Holidays = (await HolidayApi.GetHolidays("", ""))?.ToList();
+            Holidays = (await HolidayApi.GetHolidays("My", "Kuala"))?.ToList();
         }
 
-        public abstract void Start(string fileName);
+        public abstract Task Start(string fileName);
     }
 }

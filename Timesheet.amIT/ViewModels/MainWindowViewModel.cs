@@ -29,16 +29,35 @@ namespace Timesheet.amIT.ViewModels
         {
             _container = container;
 
+            _holidayApi = _container.Resolve<IHolidayProvider>();
+            _container.RegisterType(typeof(ISheetGenerator), typeof(AmItSheetGenerator), new InjectionConstructor
+            (
+               _holidayApi,
+                new DateTime(2018, 1, 1),
+                new DateTime(2018, 12, 31)
+            ));
+
             _generator = _container.Resolve<ISheetGenerator>();
+            //(
+            //    new ResolverOverride[]
+            //    {
+            //        new ParameterOverride(null, _holidayApi),
+            //        new ParameterOverride(null, new DateTime(2018, 1, 1)),
+            //        new ParameterOverride(null, new DateTime(2018, 12, 31))
+            //    }
+            //);
 
-            //_holidayApi = holidayApi;
-            _holidayApi.StartIn(new DateTime(2018, 1, 1)).EndIn(new DateTime(2018, 12, 31));
-
-           // _generator = generator;
-           // _generator.Start("");
+            Start();
+            // _generator = generator;
+            // _generator.Start("");
 
             //Interfaces.IHolidayProvider ss = new HolidayProvider.GoogleProvider();
             // holidays = ss.GetHolidays("My", "Kuala", ResourceManagement.GetResourceFileStream("Timesheet.amIT.credentials.json")).Result.ToList();
+        }
+
+        private void Start()
+        {
+            _generator.Start(Path.Combine(Common.ResourceManagement.GetCurrentExecution(), System.Configuration.ConfigurationManager.AppSettings["ExcelTemplateName"]));
         }
 
     }

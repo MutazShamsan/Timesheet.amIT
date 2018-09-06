@@ -10,6 +10,6 @@ namespace Timesheet.Interfaces
     {
         IHolidayProvider StartIn(DateTimeOffset startDate);
         IHolidayProvider EndIn(DateTimeOffset endDate);
-        Task<IEnumerable<HolidayModel>> GetHolidays(string country, string state, Stream file = null);
+        Task<IEnumerable<HolidayModel>> GetHolidays(string country, string state);
     }
 }

@@ -31,7 +31,7 @@ namespace Timesheet.amIT
         protected override void ConfigureContainer()
         {
             Container.RegisterType(typeof(IHolidayProvider), typeof(GoogleProvider));
-            Container.RegisterType(typeof(ISheetGenerator), typeof(AmItSheetGenerator));
+            //Container.RegisterType(typeof(ISheetGenerator), typeof(AmItSheetGenerator));
 
             //Container.Resolve<IHolidayProvider>();
             //Container.Resolve<ISheetGenerator>();

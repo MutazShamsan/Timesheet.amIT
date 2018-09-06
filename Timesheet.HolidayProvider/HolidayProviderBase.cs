@@ -22,6 +22,6 @@ namespace Timesheet.HolidayProvider
             return this;
         }
 
-        public abstract Task<IEnumerable<HolidayModel>> GetHolidays(string country, string state, Stream file = null);
+        public abstract Task<IEnumerable<HolidayModel>> GetHolidays(string country, string state);
     }
 }

@@ -104,7 +104,7 @@
       <Version>4.5.2.1</Version>
     </PackageReference>
     <PackageReference Include="Google.Apis.Calendar.v3">
-      <Version>1.35.1.1335</Version>
+      <Version>1.35.1.1340</Version>
     </PackageReference>
     <PackageReference Include="Prism.Unity" Version="6.3.0" />
   </ItemGroup>
@@ -112,6 +112,10 @@
     <ProjectReference Include="..\Timesheet.BusinessLogic\Timesheet.BusinessLogic.csproj">
       <Project>{16baf4f7-d2e2-4dc7-81ed-7af5e3c54371}</Project>
       <Name>Timesheet.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timesheet.Common\Timesheet.Common.csproj">
+      <Project>{6490664f-24af-468a-9bc0-5d65d4d9f43b}</Project>
+      <Name>Timesheet.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Timesheet.HolidayProvider\Timesheet.HolidayProvider.csproj">
       <Project>{2d8dd181-ad36-4ac9-9149-d33af775c477}</Project>
